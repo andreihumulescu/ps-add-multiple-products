@@ -19,20 +19,23 @@ class AddMultipleProducts extends Module
 {
     private const HOOKS = [
         'actionFrontControllerSetMedia',
+        'displayProductListReviews',
     ];
 
+    /**
+     * AddMultipleProducts constructor.
+     */
     public function __construct()
     {
         $this->name = 'addmultipleproducts';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Andrei H';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
             'min' => '8.0.0',
             'max' => _PS_VERSION_,
         ];
-        $this->bootstrap = true;
 
         parent::__construct();
 
@@ -42,6 +45,9 @@ class AddMultipleProducts extends Module
         $this->confirmUninstall = $this->trans('Are you sure you want to uninstall?', [], 'Modules.Addmultipleproducts.Admin');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function install()
     {
         if (Shop::isFeatureActive()) {
@@ -52,16 +58,25 @@ class AddMultipleProducts extends Module
             && $this->registerHook(self::HOOKS);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function uninstall()
     {
         return parent::uninstall();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isUsingNewTranslationSystem()
     {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function hookActionFrontControllerSetMedia()
     {
         Media::addJsDef([
@@ -73,11 +88,19 @@ class AddMultipleProducts extends Module
         ]);
         $this->context->controller->registerStylesheet(
             'addmultipleproducts',
-            'modules/' . $this->name . '/views/css/main.css'
+            'modules/' . $this->name . '/views/css/styles.css'
         );
         $this->context->controller->registerJavascript(
             'addmultipleproducts',
-            'modules/' . $this->name . '/views/js/app.bundle.js'
+            'modules/' . $this->name . '/views/js/main.js'
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hookDisplayProductListReviews()
+    {
+        return $this->display(__FILE__, 'views/templates/hook/display-product-list-reviews.tpl');
     }
 }
