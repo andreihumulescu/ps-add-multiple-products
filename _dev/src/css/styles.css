@@ -1,17 +1,23 @@
+.addmultipleproducts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 0 15px;
+}
+
 /* Customize the label (the checkbox-container) */
 .checkbox-container {
   display: block;
-  position: absolute;
-  right: 3rem;
-  top: 1rem;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  position: relative;
+  margin-left: 15px;
+  margin-bottom: 0;
   cursor: pointer;
   font-size: 22px;
   user-select: none;
   z-index: 11;
 }
-  
+
 /* Hide the browser's default checkbox */
 .checkbox-container input {
   position: absolute;
@@ -20,17 +26,15 @@
   height: 0;
   width: 0;
 }
-  
+
 /* Create a custom checkbox */
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: inline-block;
   height: 25px;
   width: 25px;
   background-color: #666;
 }
-  
+
 /* On mouse-over, add a grey background color */
 .checkbox-container:hover input ~ .checkmark {
   background-color: #2196F3;
@@ -55,8 +59,8 @@
 
 /* Style the checkmark/indicator */
 .checkbox-container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 10px;
+  top: 6px;
   width: 5px;
   height: 10px;
   border: solid white;

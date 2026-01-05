@@ -22,19 +22,21 @@ class AddMultipleProductsAddModuleFrontController extends ModuleFrontController
         $requestData = json_decode(Tools::file_get_contents('php://input'), true);
 
         try {
-            if (empty($requestData['productIds']) || !is_array($requestData['productIds'])) {
-                throw new LogicException($this->module->getTranslator()->trans('Please provide product IDs', [], 'Modules.Addmultipleproducts.Shop'));
+            if (empty($requestData['productData']) || !is_array($requestData['productData'])) {
+                throw new LogicException($this->module->getTranslator()->trans('Please provide product data!', [], 'Modules.Addmultipleproducts.Shop'));
             }
 
-            foreach ($requestData['productIds'] as $productId) {
-                $this->context->cart->updateQty(1, $productId);
+            $productsCount = 0;
+            foreach ($requestData['productData'] as $productData) {
+                $this->context->cart->updateQty($productData['quantity'], $productData['id']);
+                $productsCount += $productData['quantity'];
             }
 
             $this->ajaxRender(
                 json_encode([
                     'success' => true,
                     'message' => $this->module->getTranslator()->trans('Products successfully added to your shopping cart', [], 'Modules.Addmultipleproducts.Shop'),
-                    'productsCount' => count($requestData['productIds']),
+                    'productsCount' => $productsCount,
                 ])
             );
             exit;

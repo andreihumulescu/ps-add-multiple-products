@@ -99,8 +99,16 @@ class AddMultipleProducts extends Module
     /**
      * {@inheritDoc}
      */
-    public function hookDisplayProductListReviews()
+    public function hookDisplayProductListReviews($product)
     {
+        if (!isset($product['product'])) {
+            return;
+        }
+
+        $this->context->smarty->assign([
+            'product_id' => $product['product']->getId(),
+        ]);
+
         return $this->display(__FILE__, 'views/templates/hook/display-product-list-reviews.tpl');
     }
 }

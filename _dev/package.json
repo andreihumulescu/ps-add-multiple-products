@@ -4,7 +4,7 @@
   "name": "addmultipleproducts",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch",
     "build": "vite build"
   },
   "devDependencies": {
